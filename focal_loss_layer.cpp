@@ -122,11 +122,11 @@ void FocalLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
           for (int c = 0; c < bottom[0]->shape(softmax_axis_); ++c) {
               pc = prob_data[i * dim + c * inner_num_ + j];
               if(c == label_value){
-                  focal_diff =  alpha_ * pow(1 - pt, gamma_)  
-                      * (gamma_ * pt * log(std::max(pt, Dtype(FLT_MIN))) + pt - 1);
+                  focal_diff =  alpha_ * 
+                      pow(1 - pt, gamma_) * (gamma_ * pt * log(std::max(pt, Dtype(FLT_MIN))) + pt - 1);
               }
               else{
-                  focal_diff = (1 - alpha_) * 
+                  focal_diff = alpha_ * 
                      (pow(1 - pt, gamma_ - 1) * (-gamma_ * log(std::max(pt, Dtype(FLT_MIN))) * pt * pc)
                        + pow(1 - pt, gamma_) * pc);
               }

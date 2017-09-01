@@ -93,9 +93,9 @@ __global__ void FocalLossBackwardGPU(const int nthreads, const Dtype* top,
         }
         else{
             Dtype pc = bottom_diff[n * dim + c * spatial_dim + s];
-            bottom_diff[n * dim + c * spatial_dim + s] = (1 - alpha_) * 
-                powf(1 - pt, gamma_ - 1) * (-gamma_ * log(max(pt, Dtype(FLT_MIN))) * pt * pc) +
-                powf(1 - pt, gamma_) * pc;
+            bottom_diff[n * dim + c * spatial_dim + s] = alpha_ * 
+                (powf(1 - pt, gamma_ - 1) * (-gamma_ * log(max(pt, Dtype(FLT_MIN))) * pt * pc) +
+                powf(1 - pt, gamma_) * pc);
         }
       }
       counts[index] = 1;
